@@ -206,6 +206,45 @@
             transform: translateY(-2px);
         }
 
+        /* Share Buttons */
+        .share-container {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.2s, background-color 0.2s;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .share-twitter {
+            background-color: #1DA1F2;
+        }
+
+        .share-facebook {
+            background-color: #4267B2;
+        }
+
+        .share-link {
+            background-color: #636e72;
+        }
+
         /* Animations */
         @keyframes shredFall {
             0% {
@@ -275,9 +314,16 @@
             <a href="https://buymeacoffee.com/pm430" class="coffee-btn" target="_blank">
                 <span>☕</span> 개발자에게 커피 수혈하기
             </a>
-            <br><br>
+
+            <div class="share-container">
+                <button class="share-btn share-twitter" onclick="shareTwitter()" title="트위터로 공유">🐦</button>
+                <button class="share-btn share-facebook" onclick="shareFacebook()" title="페이스북으로 공유">f</button>
+                <button class="share-btn share-link" onclick="copyLink()" title="링크 복사">🔗</button>
+            </div>
+
+            <br>
             <button onclick="location.reload()"
-                style="background:none; border:none; color:#b2bec3; cursor:pointer; text-decoration:underline;">
+                style="background:none; border:none; color:#b2bec3; cursor:pointer; text-decoration:underline; margin-top: 10px;">
                 다른 걱정 또 분쇄하기
             </button>
         </div>
@@ -364,6 +410,26 @@
 
                 // Show Result
                 resultSection.style.display = 'flex';
+            }
+
+            // Share Functions
+            window.shareTwitter = function () {
+                const text = "오늘의 걱정을 흔적도 없이 갈아버렸어요! ☁️ #오늘의걱정분쇄기";
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`, '_blank');
+            }
+
+            window.shareFacebook = function () {
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            }
+
+            window.copyLink = function () {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('링크가 복사되었습니다! 친구들에게 공유해보세요.');
+                }).catch(err => {
+                    console.error('복사 실패:', err);
+                });
             }
         });
     </script>
